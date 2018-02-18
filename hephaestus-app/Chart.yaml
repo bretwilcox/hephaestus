@@ -1,0 +1,8 @@
+name: hephaestus-app
+version: 0.0.1
+description: A Helm chart for running the Hephaestus RoR app on Kubernetes
+source:
+  - https://github.com/bretwilcox/hephaestus
+maintainers:
+  - name: Bret Wilcox
+    email: me@bretwilcox.com

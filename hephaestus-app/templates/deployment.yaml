@@ -1,0 +1,51 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: {{ template "fullname" . }}
+  labels:
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
+spec:
+  replicas: {{ .Values.replicaCount }}
+  template:
+    metadata:
+      labels:
+        app: {{ template "fullname" . }}
+    spec:
+      containers:
+      - name: {{ .Chart.Name }}
+        image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+        imagePullPolicy: {{ .Values.image.pullPolicy }}
+        ports:
+        - containerPort: {{ .Values.service.internalPort }}
+        env:
+        - name: ANNOTATION_1
+          value: {{ .Values.annotation1 }}
+        - name: ANNOTATION_2
+          value: {{ .Values.annotation2 }}
+        - name: ANNOTATION_3
+          value: {{ .Values.annotation3 }}
+        - name: ANNOTATION_4
+          value: {{ .Values.annotation4 }}
+        - name: MARIADB_HOST
+          value: {{ template "mariadb.fullname" . }}
+        - name: SKIP_DB_WAIT
+          value: "1"
+        - name: MARIADB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: {{ template "mariadb.fullname" . }}
+              key: mariadb-root-password
+        resources:
+{{ toYaml .Values.resources | indent 12 }}
+        livenessProbe:
+          httpGet:
+            path: /
+            port: {{ .Values.service.internalPort }}
+          initialDelaySeconds: 180 # We need to wait for the database initialization
+          timeoutSeconds: 5
+        readinessProbe:
+          httpGet:
+            path: /
+            port: {{ .Values.service.internalPort }}
+          initialDelaySeconds: 60
+          timeoutSeconds: 5

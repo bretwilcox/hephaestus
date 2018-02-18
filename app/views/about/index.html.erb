@@ -1,0 +1,46 @@
+<h1>About This App</h1></ha>
+
+<h2>Attributes of pod currently performing the page render</h2>
+
+<h3>Name</h3>
+<p><%= @current_pod_name %></p>
+
+<h3>IP Address</h3>
+<p><%= @ip_address %></p>
+
+<h3>ReplicaSet Name</h3>
+<p><%= @current_pod_replica_set_name %></p>
+
+<h3>All Attributes</h3>
+<p><%= @current_pod %></p>
+
+<h2>Attributes replicaset belonging to current pod performing render</h2>
+
+<h3>Name</h3>
+<p><%= @current_pod_replica_set_name %></p>
+
+<h3>All Attributes</h3>
+<p><%= @current_pod_replica_set %></p>
+
+<h3>Services in current replicaset</h3>
+<% @services_in_current_replica_set.each do |service| %>
+  <h4><%= service.to_h[:metadata][:name] %></h4>
+  <p><%= service %></p>
+<% end %>
+
+<h3>Pods in current replicaset</h3>
+<% @pods_in_current_replica_set.each do |pod| %>
+<h4><%= pod.to_h[:metadata][:name] %></h4>
+<p><%= pod %></p>
+<% end %>
+
+
+<h2>Annotation Queries</h2>
+<h3>Annotations that will be scanned</h3>
+<p><%= @annotations %></p>
+
+<h2>Attributes of all replicasets</h2>
+<p><%= @replica_sets %></p>
+
+<h2>Attributes of all services</h2>
+<p><%= @services %></p>
