@@ -1,3 +1,9 @@
+### Overview
+This is a proof of concept Ruby on Rails application written to explore
+* Deploying Ruby on Rail with Helm Charts
+* Accessing the Kubernetes API within a Pod
+* Prometheus integration
+
 #### Prometheus Integration
 Metrics and be found at by navigating to the /metrics page within the app.  For verification of the integration a test gauge was implemented at /test_gauge that creates a gauge with a random value between 1 and 100 when it is hit.
 
